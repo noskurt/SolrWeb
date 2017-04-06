@@ -11,7 +11,6 @@ import org.springframework.data.solr.repository.SolrCrudRepository;
 
 import java.util.Collection;
 
-
 public interface ArticleRepository extends SolrCrudRepository<Article, String> {
 
     @Highlight(prefix = "<b>", postfix = "</b>")

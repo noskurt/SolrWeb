@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -15,8 +15,8 @@
 
     </dt>
     <dd class="bookDescription">
-          <span th:if="${article.content}"
-                th:text="${article.content}">Content</span>
+        <span th:if="${article.content}"
+              th:text="${article.content}">Content</span>
         <span th:if="${article.content eq null}">
                 No content available</span>
     </dd>
