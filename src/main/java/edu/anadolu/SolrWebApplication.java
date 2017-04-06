@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Import({WebContext.class, SolrContext.class})
 public class SolrWebApplication extends WebMvcConfigurerAdapter {
 
+    // Main
     public static void main(String[] args) {
         SpringApplication.run(SolrWebApplication.class, args);
     }
