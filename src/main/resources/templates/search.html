@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+
+<dl th:each="article : ${page.content}">
+    <dt class="bookHeadline">
+        <span th:text="${article.title}">Title</span> by
+        <span th:text="${article.source}">Source</span>
+        (Published: <span th:text="${article.published}">published</span>)
+
+    </dt>
+    <dd class="bookDescription">
+          <span th:if="${article.content}"
+                th:text="${article.content}">Content</span>
+        <span th:if="${article.content eq null}">
+                No content available</span>
+    </dd>
+</dl>
+
+
+</body>
+</html>
