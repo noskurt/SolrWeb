@@ -17,8 +17,8 @@ public class SolrContext {
 
     static final String SOLR_HOST = "solr.host";
 
-    @Resource
-    private Environment environment;
+
+    private @Resource Environment environment;
 
     @Bean
     public SolrClient solrClient() {
