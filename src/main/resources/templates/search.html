@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>1M Signal News Dataset</title>
 </head>
 <body>
 
+<form action="#" th:action="@{/search}" method="post">
+
+    Search 1M Signal:
+    <input type="search" name="q" id="q"/>
+    <input type="submit" value="Search"/>
+
+</form>
+
+<dl th:each="facet : ${page.getFacetResultPage('source')}">
+    <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'"/>
+</dl>
 
 <dl th:each="article : ${page.content}">
     <dt class="bookHeadline">
@@ -15,11 +26,16 @@
 
     </dt>
     <dd class="bookDescription">
-        <span th:if="${article.content}"
-              th:text="${article.content}">Content</span>
+          <span th:if="${article.content}"
+                th:text="${article.content}">Content</span>
         <span th:if="${article.content eq null}">
                 No content available</span>
     </dd>
+
+    <dl th:each="highlight : ${page.getHighlights(article)}">
+        <span th:utext="${highlight.getSnipplets()}">Snippet</span>
+    </dl>
+
 </dl>
 
 
