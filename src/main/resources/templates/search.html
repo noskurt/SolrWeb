@@ -4,15 +4,34 @@
     <meta charset="UTF-8"/>
     <title>1M Signal News Dataset</title>
 </head>
+<style>
+    ul li {
+        display: inline;
+    }
+</style>
 <body>
 
-<form action="#" th:action="@{/search}" method="post">
+<form action="#" th:action="@{/search}" method="get">
 
     Search 1M Signal:
     <input type="search" name="q" id="q"/>
     <input type="submit" value="Search"/>
 
 </form>
+
+<a th:if="${pageable.hasPrevious()}" th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()-1})}">PREV</a>
+<a th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()+1})}">NEXT</a>
+
+<ul>
+    <li th:each="pageNo : ${#numbers.sequence(0, page.getTotalPages() - 1)}">
+        <a th:if="${pageable.getPageNumber() eq pageNo}" href="javascript:void(0);">
+            <span th:text="${pageNo + 1}"></span>
+        </a>
+        <a th:if="${not (pageable.getPageNumber() eq pageNo)}" th:href="@{${'/search'}(q=${query},page=${pageNo})}">
+            <span th:text="${pageNo + 1}"></span>
+        </a>
+    </li>
+</ul>
 
 <dl th:each="facet : ${page.getFacetResultPage('source')}">
     <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'"/>
