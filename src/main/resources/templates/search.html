@@ -19,31 +19,22 @@
 
 </form>
 
-<a th:if="${pageable.hasPrevious()}" th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()-1})}">PREV</a>
-<a th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()+1})}">NEXT</a>
 
-<ul>
-    <li th:each="pageNo : ${#numbers.sequence(0, page.getTotalPages() - 1)}">
-        <a th:if="${pageable.getPageNumber() eq pageNo}" href="javascript:void(0);">
-            <span th:text="${pageNo + 1}"></span>
-        </a>
-        <a th:if="${not (pageable.getPageNumber() eq pageNo)}" th:href="@{${'/search'}(q=${query},page=${pageNo})}">
-            <span th:text="${pageNo + 1}"></span>
-        </a>
-    </li>
-</ul>
 
 <dl th:each="facet : ${page.getFacetResultPage('source')}">
     <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'"/>
 </dl>
 
 <dl th:each="article : ${page.content}">
-    <dt class="bookHeadline">
-        <span th:text="${article.title}">Title</span> by
-        <span th:text="${article.source}">Source</span>
-        (Published: <span th:text="${article.published}">published</span>)
+    <!--<a th:href="@{${'/news/'${article.id}}}" target="_blank">   PROBLEMMM  -->
+        <dt class="bookHeadline">
+            <span th:text="${article.title}">Title</span> by
+            <span th:text="${article.source}">Source</span>
+            (Published: <span th:text="${article.published}">published</span>)
 
-    </dt>
+        </dt>
+    </a>
+
     <dd class="bookDescription">
           <span th:if="${article.content}"
                 th:text="${article.content}">Content</span>
@@ -57,6 +48,19 @@
 
 </dl>
 
+<a th:if="${pageable.hasPrevious()}" th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()-1})}">PREV</a>
+<a th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()+1})}">NEXT</a>
+
+<ul>
+    <li th:each="pageNo : ${#numbers.sequence(0, page.getTotalPages() - 1)}">
+        <a th:if="${pageable.getPageNumber() eq pageNo}" href="javascript:void(0);">
+            <span th:text="${pageNo + 1}"></span>
+        </a>
+        <a th:if="${not (pageable.getPageNumber() eq pageNo)}" th:href="@{${'/search'}(q=${query},page=${pageNo})}">
+            <span th:text="${pageNo + 1}"></span>
+        </a>
+    </li>
+</ul>
 
 </body>
 </html>
