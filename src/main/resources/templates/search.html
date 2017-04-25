@@ -20,13 +20,12 @@
 </form>
 
 
-
 <dl th:each="facet : ${page.getFacetResultPage('source')}">
     <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'"/>
 </dl>
 
 <dl th:each="article : ${page.content}">
-    <!--<a th:href="@{${'/news/'${article.id}}}" target="_blank">   PROBLEMMM  -->
+    <a th:href="@{'/news/'+${article.id}}" target="_blank">
         <dt class="bookHeadline">
             <span th:text="${article.title}">Title</span> by
             <span th:text="${article.source}">Source</span>
