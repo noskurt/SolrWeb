@@ -3,63 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>1M Signal News Dataset</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <style>
         @import url('http://getbootstrap.com/dist/css/bootstrap.css');
-
         html, body, .container-table {
             height: 100%;
         }
-
         .container-table {
             display: table;
-        }
-
-        .vertical-center-row {
-            display: table-cell;
-            vertical-align: middle;
         }
     </style>
 </head>
 <body>
 
 
-<div class="container container-table">
-    <div class="row vertical-center-row">
-        <div class="text-center col-md-12">
-            <div class="jumbotron" align="center">
-                <h1>The Signal Media One-Million News Articles Dataset</h1>
-                <form action="/search" class="form-horizontal">
-
-                    <div class="row">
-                        <div class="col-md-4">
-                        </div>
-
-                        <div class="col-md-4">
-                            <input type="search" name="q" id="q" placeholder="Search 1M Signal"
-                                   class="form-control text-center" style="margin-bottom: 1%">
-                        </div>
-
-                        <div class="col-md-4">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                        </div>
-
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary btn-lg">Search</button>
-                        </div>
-
-                        <div class="col-md-4"></div>
-                    </div>
-                </form>
-            </div>
-        </div>
+<div class="container">
+    <div class="jumbotron" align="center">
+        <h1>The Signal Media One-Million News Articles Dataset</h1>
     </div>
 </div>
 
+<div class="container container-table">
+    <div class="text-center col-md-12">
+        <div class="well" align="center">
+            <form action="/search" class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="search" name="q" id="q" placeholder="Search 1M Signal"
+                               class="form-control text-center" style="margin-bottom: 1%">
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                    </div>
+
+                    <div class="col-md-4"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
