@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <style>
         @import url('http://getbootstrap.com/dist/css/bootstrap.css');
+
         html, body, .container-table {
             height: 100%;
         }
+
         .container-table {
             display: table;
         }
@@ -19,46 +21,53 @@
 
 
 <div class="container">
-    <div class="jumbotron" align="center">
-        <h1>The Signal Media One-Million News Articles Dataset</h1>
-    </div>
-</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="" align="center">
+                <h1>The Signal Media One-Million News Articles Dataset</h1>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="text-center">
+                <div class="" align="center">
+                    <form action="/search" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-4">
+                            </div>
 
-<div class="container">
-    <div class="text-center">
-        <div class="well" align="center">
-            <form action="/search" class="form-horizontal">
-                <div class="row">
-                    <div class="col-md-4">
-                    </div>
+                            <div class="col-md-4">
+                                <input type="search" name="q" id="q" placeholder="Search 1M Signal"
+                                       class="form-control text-center" style="margin-bottom: 1%">
+                            </div>
 
-                    <div class="col-md-4">
-                        <input type="search" name="q" id="q" placeholder="Search 1M Signal"
-                               class="form-control text-center" style="margin-bottom: 1%">
-                    </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
 
-                    <div class="col-md-4">
-                    </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                            </div>
+
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                            </div>
+
+                            <div class="col-md-4"></div>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                    </div>
-
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary btn-lg">Search</button>
-                    </div>
-
-                    <div class="col-md-4"></div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="alert alert-danger" align="center">
-    <strong>Emre BOZKURT</strong><br/>
-    <a href="http://youtube.com/javaca" target="_blank">YouTube</a>
+<div class="container">
+    <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="alert alert-danger" align="center">
+            <strong>Emre BOZKURT</strong><br/>
+            <a href="http://youtube.com/javaca" target="_blank">YouTube</a>
+        </div>
+    </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
