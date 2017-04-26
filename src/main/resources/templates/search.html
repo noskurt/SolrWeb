@@ -5,7 +5,6 @@
     <title>1M Signal News Dataset</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-
     <style>
         ul li {
             display: inline;
@@ -19,10 +18,9 @@
             display: none;
         }
 
-        .highlight {
+        mark {
             background-color:yellow;
         }
-
     </style>
 </head>
 
@@ -42,7 +40,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container context">
     <button data-toggle="collapse" class="btn btn-warning" data-target="#filter">See Filters</button>
 
     <div id="filter" class="collapse">
@@ -64,7 +62,7 @@
             </div>
             <div class="panel-body">
                 <div th:id="${article.id}" class="collapse">
-                    <a th:href="@{'/news/'+${article.id}}" target="_blank">
+                    <a th:href="@{'/news/'+${article.id}(q=${query})}" target="_blank">
                         <dd>
                             <span th:if="${article.content}" th:text="${article.content}">Content</span>
                             <span th:if="${article.content eq null}">No content available</span>
@@ -135,6 +133,18 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/mark.js/8.9.0/mark.min.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+        var que = [[${query}]];
+    /*]]>*/
+
+    var context = document.querySelector(".context");
+    var instance = new Mark(context);
+    instance.mark(que);
+</script>
+
 <script>
     $(document).ready(function () {
         $(window).scroll(function () {
