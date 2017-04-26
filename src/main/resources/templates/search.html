@@ -41,7 +41,7 @@
     </div>
 </nav>
 
-<div class="container context">
+<div class="container">
     <button data-toggle="collapse" class="btn btn-warning" data-target="#filter">See Filters</button>
 
     <div id="filter" class="collapse">
@@ -49,9 +49,9 @@
             <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'"/>
         </dl>
     </div>
+</div>
 
-
-
+<div class="container context">
     <dl th:each="article : ${page.content}">
         <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" th:attr="data-target='#'+${article.id}">
