@@ -31,7 +31,6 @@ public class SearchController {
         return "search";
     }
 
-
     @Autowired
     public void setNewsService(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
