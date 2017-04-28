@@ -1,8 +1,12 @@
 package edu.anadolu;
 
+import org.apache.solr.client.solrj.SolrServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -22,9 +26,14 @@ public class SearchController {
     private ArticleRepository articleRepository;
 
     @RequestMapping("/search")
-    public String search(@RequestParam(value = "q", required = false) String query, @PageableDefault(
-            page = 0, size = 10) Pageable pageable, Model model) {
+    public String search(@RequestParam(value = "q", required = false) String query,
+                         @PageableDefault(page = 0, size = 10) Pageable pageable,
+                         @RequestParam(value = "fq", required = false) String filter,
+                         Model model) {
 
+        Query query1 = new SimpleQuery(new Criteria("source").is("MyInforms"));
+
+        model.addAttribute("filter", filter);
         model.addAttribute("page", articleRepository.findByTitle(query, pageable));
         model.addAttribute("pageable", pageable);
         model.addAttribute("query", query);
