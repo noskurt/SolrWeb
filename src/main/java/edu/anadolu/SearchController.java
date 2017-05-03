@@ -26,6 +26,9 @@ public class SearchController {
     @Resource
     private ArticleRepository articleRepository;
 
+    @Resource
+    private CustomRepository customRepository;
+
     @RequestMapping("/search")
     public String search(@RequestParam(value = "q", required = false) String query,
                          @PageableDefault(page = 0, size = 10) Pageable pageable,
@@ -34,8 +37,19 @@ public class SearchController {
         model.addAttribute("page", articleRepository.findByTitle(query, pageable));
         model.addAttribute("pageable", pageable);
         model.addAttribute("query", query);
+
         return "search";
     }
+
+    @RequestMapping("/search/filter")
+    public String filtered(@RequestParam(value = "q", required = false) String query,
+                           Model model){
+
+        model.addAttribute("page", customRepository.searchFilter(query));
+
+        return "filtered";
+    }
+
 
     @Autowired
     public void setNewsService(ArticleRepository articleRepository) {
@@ -43,7 +57,8 @@ public class SearchController {
     }
 
     @Autowired
-    public SearchController(ArticleRepository articleRepository) {
+    public SearchController(ArticleRepository articleRepository, CustomRepository customRepository) {
         this.articleRepository = articleRepository;
+        this.customRepository = customRepository;
     }
 }

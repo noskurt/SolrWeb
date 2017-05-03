@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>1M Signal News Dataset</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+
+<body>
+
+<!--<div class="container">-->
+    <!--<button data-toggle="collapse" class="btn btn-warning" data-target="#filter">See Filters</button>-->
+
+    <!--<div id="filter" class="collapse">-->
+        <!--<dl th:each="facet : ${page.getFacetResultPage('source')}">-->
+            <!--<input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'"/>-->
+        <!--</dl>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="container context">
+    <dl th:each="article : ${page}">
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" th:attr="data-target='#'+${article.id}">
+                <dt>
+                    <span th:text="${article.title}">Title</span> by
+                    <span th:text="${article.source}">Source</span>
+                    (Published: <span th:text="${article.published}">published</span>)
+                </dt>
+            </div>
+            <div class="panel-body">
+                <div th:id="${article.id}" class="collapse">
+                    <a th:href="@{'/news/'+${article.id}(q=${query})}" target="_blank">
+                        <dd>
+                            <span th:if="${article.content}" th:text="${article.content}">Content</span>
+                            <span th:if="${article.content eq null}">No content available</span>
+                        </dd>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </dl>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/mark.js/8.9.0/mark.min.js"></script>
+
+</body>
+</html>

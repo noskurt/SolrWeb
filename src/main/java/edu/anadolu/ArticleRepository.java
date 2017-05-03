@@ -10,6 +10,8 @@ import org.springframework.data.solr.repository.Highlight;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
+import java.util.List;
+
 public interface ArticleRepository extends SolrCrudRepository<Article, String> {
 
     @Highlight(prefix = "<b>", postfix = "</b>", fields = {"title", "content"})
@@ -19,7 +21,7 @@ public interface ArticleRepository extends SolrCrudRepository<Article, String> {
     @Facet(fields = {"source"}, limit = 10)
     @Highlight(prefix = "<b>", postfix = "</b>", fields = {"title", "content"})
 //    @Query(filters = "source:\"\"")
-    SolrResultPage<Article> findByTitle(String query, Pageable page);
+    List<Article> findByTitle(String query, Pageable page);
 
     //Execute faceted search
     //Query will be "q=content:<name>&facet=true&facet.field=source&facet.limit=20&start=<page.number>&rows=<page.size>"
