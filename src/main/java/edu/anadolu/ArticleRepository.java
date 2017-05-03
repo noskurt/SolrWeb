@@ -1,6 +1,5 @@
 package edu.anadolu;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.core.query.result.HighlightPage;
@@ -9,8 +8,6 @@ import org.springframework.data.solr.repository.Facet;
 import org.springframework.data.solr.repository.Highlight;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
-
-import java.util.List;
 
 public interface ArticleRepository extends SolrCrudRepository<Article, String> {
 

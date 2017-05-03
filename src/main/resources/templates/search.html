@@ -45,9 +45,12 @@
     <button data-toggle="collapse" class="btn btn-warning" data-target="#filter">See Filters</button>
 
     <div id="filter" class="collapse">
-        <dl th:each="facet : ${page.getFacetResultPage('source')}">
-            <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'"/>
-        </dl>
+        <form action="#" th:action="@{${'/search/filter'}(q=${query})}" method="post">
+            <p th:each="facet : ${page.getFacetResultPage('source')}">
+                <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'" th:value="${facet.getValue()}" name="fq"/>
+            </p>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
     </div>
 </div>
 

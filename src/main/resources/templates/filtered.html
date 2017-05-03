@@ -82,25 +82,25 @@
 </div>
 
 <ul class="pager">
-    <li><a th:if="${pageable.getPageNumber() ne 0}" th:href="@{${'/search'}(q=${query},page=0)}">First</a></li>
+    <li><a th:if="${pageable.getPageNumber() ne 0}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=0)}">First</a></li>
     <li class="disabled"><a th:if="${pageable.getPageNumber() eq 0}" href="javascript:void(0);">First</a></li>
 
-    <li><a th:if="${pageable.hasPrevious()}" th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()-1})}">Previous</a></li>
+    <li><a th:if="${pageable.hasPrevious()}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${pageable.getPageNumber()-1})}">Previous</a></li>
     <li class="disabled"><a th:if="${pageable.hasPrevious() eq false}" href="javascript:void(0);">Previous</a></li>
 
     <li class="disabled"><span th:text="${pageable.getPageNumber()}+1+' / '+${page.getTotalPages()}"></span></li>
 
-    <li><a th:if="${pageable.getPageNumber() lt page.getTotalPages()-1}" th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()+1})}">Next</a></li>
+    <li><a th:if="${pageable.getPageNumber() lt page.getTotalPages()-1}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${pageable.getPageNumber()+1})}">Next</a></li>
     <li class="disabled"><a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Next</a></li>
 
-    <li><a th:if="${pageable.getPageNumber() ne page.getTotalPages()-1}" th:href="@{${'/search'}(q=${query},page=${page.getTotalPages()-1})}">Last</a></li>
+    <li><a th:if="${pageable.getPageNumber() ne page.getTotalPages()-1}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${page.getTotalPages()-1})}">Last</a></li>
     <li class="disabled"><a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Last</a></li>
 </ul>
 
 <div class="row" style="margin-bottom: 5%">
     <div class="col-xs-4"></div>
     <div class="col-xs-4">
-        <form action="#" th:action="@{${'/search'}(q=${query})}" method="post">
+        <form action="#" th:action="@{${'/search/filter'}(q=${query},fq=${fquery})}" method="post">
             <div class="input-group">
                 <input type="number" class="text-center form-control" placeholder="Enter page number" name="page"/>
                 <span class="input-group-btn">

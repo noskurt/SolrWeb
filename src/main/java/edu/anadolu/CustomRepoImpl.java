@@ -1,5 +1,6 @@
 package edu.anadolu;
 
+import com.sun.istack.internal.Nullable;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -18,42 +19,42 @@ import java.io.IOException;
 import java.util.List;
 
 @Repository
-public class CustomRepoImpl implements CustomRepository{
+public class CustomRepoImpl implements CustomRepository {
 
     @Resource
     private SolrTemplate solrTemplate;
 
     @Override
-    public List<Article> searchFilter(String query, String fQuery, Pageable pageable){
-        String[] words = fQuery.split(" ");
+    public SolrResultPage<Article> searchFilter(String query, String fQuery, Pageable pageable) {
+
+        System.out.println(fQuery);
+
+        String[] words = fQuery.split(",");
 
         Criteria conditions = createSearchConditions(words, query);
         SimpleQuery search = new SimpleQuery(conditions);
-
-        System.out.println("HEYYY: "+search.getCriteria().toString());
 
         search.setPageRequest(pageable);
 
         Page results = solrTemplate.queryForPage(search, Article.class);
 
-        return results.getContent();
+        return new SolrResultPage<Article>(results.getContent(), pageable, results.getTotalElements(), Float.MAX_VALUE);
     }
 
     private Criteria createSearchConditions(String[] words, String query) {
-        Criteria conditions = null;
+        Criteria title = new Criteria("title").is(query);
+        Criteria src = null;
 
-        for (String word: words) {
-            if (conditions == null) {
-                conditions = new Criteria("source").is(word);
-            }
-            else {
-                conditions = conditions.or(new Criteria("source").is(word));
+        for (String word : words) {
+            if (src == null) {
+                src = new Criteria("source").is(word);
+            } else {
+                src = src.or(new Criteria("source").is(word));
             }
         }
 
-        conditions = conditions.and(new Criteria("title").contains(query))
-                .or(new Criteria("content").contains(query));
+        System.out.println("HEYY: "+title.and(src));
 
-        return conditions;
+        return title.and(src);
     }
 }

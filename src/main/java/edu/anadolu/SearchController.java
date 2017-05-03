@@ -46,9 +46,10 @@ public class SearchController {
         model.addAttribute("query",query);
         model.addAttribute("fquery",filterQuery);
 
+        System.out.println(customRepository.searchFilter(query, filterQuery, pageable).getFacetResultPage("source"));
+
         return "filtered";
     }
-
 
     @Autowired
     public void setNewsService(ArticleRepository articleRepository) {
