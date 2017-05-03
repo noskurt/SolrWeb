@@ -1,7 +1,12 @@
 package edu.anadolu;
 
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.solr.core.SolrCallback;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -9,6 +14,7 @@ import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 @Repository
@@ -24,9 +30,12 @@ public class CustomRepoImpl implements CustomRepository{
         Criteria conditions = createSearchConditions(words, query);
         SimpleQuery search = new SimpleQuery(conditions);
 
+        System.out.println("HEYYY: "+search.getCriteria().toString());
+
         search.setPageRequest(pageable);
 
         Page results = solrTemplate.queryForPage(search, Article.class);
+
         return results.getContent();
     }
 
