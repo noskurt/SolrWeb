@@ -1,6 +1,7 @@
 package edu.anadolu;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -17,17 +18,19 @@ public class CustomRepoImpl implements CustomRepository{
     private SolrTemplate solrTemplate;
 
     @Override
-    public List<Article> searchFilter(String searchTerm) {
-        String[] words = searchTerm.split(" ");
+    public List<Article> searchFilter(String query, String fQuery, Pageable pageable){
+        String[] words = fQuery.split(" ");
 
-        Criteria conditions = createSearchConditions(words);
+        Criteria conditions = createSearchConditions(words, query);
         SimpleQuery search = new SimpleQuery(conditions);
+
+        search.setPageRequest(pageable);
 
         Page results = solrTemplate.queryForPage(search, Article.class);
         return results.getContent();
     }
 
-    private Criteria createSearchConditions(String[] words) {
+    private Criteria createSearchConditions(String[] words, String query) {
         Criteria conditions = null;
 
         for (String word: words) {
@@ -38,6 +41,9 @@ public class CustomRepoImpl implements CustomRepository{
                 conditions = conditions.or(new Criteria("source").is(word));
             }
         }
+
+        conditions = conditions.and(new Criteria("title").contains(query))
+                .or(new Criteria("content").contains(query));
 
         return conditions;
     }

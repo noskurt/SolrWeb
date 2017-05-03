@@ -21,7 +21,7 @@ public interface ArticleRepository extends SolrCrudRepository<Article, String> {
     @Facet(fields = {"source"}, limit = 10)
     @Highlight(prefix = "<b>", postfix = "</b>", fields = {"title", "content"})
 //    @Query(filters = "source:\"\"")
-    List<Article> findByTitle(String query, Pageable page);
+    SolrResultPage<Article> findByTitle(String query, Pageable page);
 
     //Execute faceted search
     //Query will be "q=content:<name>&facet=true&facet.field=source&facet.limit=20&start=<page.number>&rows=<page.size>"
