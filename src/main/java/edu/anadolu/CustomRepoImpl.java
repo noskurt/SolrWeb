@@ -22,8 +22,6 @@ public class CustomRepoImpl implements CustomRepository {
 
     @Override
     public SolrResultPage<Article> searchFilter(String query, String fQuery, Pageable pageable) {
-        System.out.println(fQuery);
-
         String[] words = fQuery.split(",");
 
         Criteria conditions = createSearchConditions(words, query);
@@ -37,7 +35,7 @@ public class CustomRepoImpl implements CustomRepository {
     }
 
     @Override
-    public FacetPage<Article> getFacetPage(String query) {
+    public FacetPage<Article> getFacetPage(String query, String filterQuery) {
         FacetQuery facetQuery = new SimpleFacetQuery(new Criteria("title").is(query));
 
         facetQuery.setFacetOptions(new FacetOptions("source"));

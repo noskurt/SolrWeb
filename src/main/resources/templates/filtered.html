@@ -46,10 +46,11 @@
     <div id="filter" class="collapse">
         <form action="#" th:action="@{${'/search/filter'}(q=${query})}" method="post">
             <p class="checkbox" th:each="facet : ${faceted.getFacetResultPage('source')}">
-                <input type="checkbox" th:text="${facet.getValue()}" th:value="${facet.getValue()}" name="fq"/>
+                <input type="checkbox" th:text="${facet.getValue()}" th:value="${facet.getValue()}" name="fq" th:checked="${fquery.contains(facet.getValue())}"/>
                 <span class="badge" th:text="${facet.getValueCount()}"></span>
             </p>
             <button type="submit" class="btn btn-primary">Filter</button>
+            <a type="button" class="btn btn-danger" th:href="@{${'/search'}(q=${query})}">Clear</a>
         </form>
     </div>
 </div>
@@ -138,6 +139,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/mark.js/8.9.0/mark.min.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function filterControl(item) {
+        alert(item.value);
+    }
+    /*]]>*/
+</script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/

@@ -50,6 +50,7 @@
                 <span class="badge" th:text="${facet.getValueCount()}"></span>
             </p>
             <button type="submit" class="btn btn-primary">Filter</button>
+            <a type="button" class="btn btn-danger" th:href="@{${'/search'}(q=${query})}">Clear</a>
         </form>
     </div>
 </div>
