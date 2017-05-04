@@ -38,16 +38,16 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
         <h4 class="navbar-text"><span th:text="${page.getTotalElements()}"></span> results found</h4>
+        <button data-toggle="collapse" class="btn btn-warning navbar-btn " data-target="#filter">See Filters</button>
     </div>
 </nav>
 
-<div class="container">
-    <button data-toggle="collapse" class="btn btn-warning" data-target="#filter">See Filters</button>
-
+<div class="container" style="margin-bottom: 1%">
     <div id="filter" class="collapse">
         <form action="#" th:action="@{${'/search/filter'}(q=${query})}" method="post">
-            <p th:each="facet : ${page.getFacetResultPage('source')}">
-                <input type="checkbox" th:text="${facet.getValue()} + ' (' + ${facet.getValueCount()} + ')'" th:value="${facet.getValue()}" name="fq"/>
+            <p class="checkbox" th:each="facet : ${page.getFacetResultPage('source')}">
+                <input type="checkbox" th:text="${facet.getValue()}" th:value="${facet.getValue()}" name="fq"/>
+                <span class="badge" th:text="${facet.getValueCount()}"></span>
             </p>
             <button type="submit" class="btn btn-primary">Filter</button>
         </form>

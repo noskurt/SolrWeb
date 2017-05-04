@@ -1,22 +1,17 @@
 package edu.anadolu;
 
-import com.sun.istack.internal.Nullable;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.solr.core.SolrCallback;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.core.query.Criteria;
-import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.*;
+import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Repository;
+import org.thymeleaf.doctype.translation.DocTypeTranslation;
+import org.thymeleaf.dom.DocType;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.util.List;
 
 @Repository
 public class CustomRepoImpl implements CustomRepository {
@@ -26,7 +21,6 @@ public class CustomRepoImpl implements CustomRepository {
 
     @Override
     public SolrResultPage<Article> searchFilter(String query, String fQuery, Pageable pageable) {
-
         System.out.println(fQuery);
 
         String[] words = fQuery.split(",");
@@ -39,6 +33,15 @@ public class CustomRepoImpl implements CustomRepository {
         Page results = solrTemplate.queryForPage(search, Article.class);
 
         return new SolrResultPage<Article>(results.getContent(), pageable, results.getTotalElements(), Float.MAX_VALUE);
+    }
+
+    @Override
+    public FacetPage<Article> getFacetPage(String query) {
+        FacetQuery facetQuery = new SimpleFacetQuery(new Criteria("title").is(query));
+
+        facetQuery.setFacetOptions(new FacetOptions("source"));
+
+        return solrTemplate.queryForFacetPage(facetQuery, Article.class);
     }
 
     private Criteria createSearchConditions(String[] words, String query) {
