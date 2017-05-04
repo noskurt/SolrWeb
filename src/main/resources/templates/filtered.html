@@ -73,7 +73,7 @@
                         </dd>
 
                         <div class="alert alert-success" style="margin-top: 5%">
-                            <dl th:each="highlight : ${page.getHighlights(article)}">
+                            <dl th:each="highlight : ${highlighted.getHighlights(article)}">
                                 <span th:utext="${highlight.getSnipplets()}">Snippet</span>
                             </dl>
                         </div>
