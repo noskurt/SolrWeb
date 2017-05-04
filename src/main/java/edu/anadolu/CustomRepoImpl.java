@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.HighlightEntry;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Repository;
@@ -21,8 +22,8 @@ public class CustomRepoImpl implements CustomRepository {
     private SolrTemplate solrTemplate;
 
     @Override
-    public SolrResultPage<Article> searchFilter(String query, String fQuery, Pageable pageable) {
-        String[] words = fQuery.split(",");
+    public SolrResultPage<Article> searchFilter(String query, String filterQuery, Pageable pageable) {
+        String[] words = filterQuery.split(",");
 
         Criteria conditions = createSearchConditions(words, query);
         SimpleQuery search = new SimpleQuery(conditions);
@@ -44,9 +45,13 @@ public class CustomRepoImpl implements CustomRepository {
     }
 
     @Override
-    public HighlightPage<Article> getHighlightPage(String query) {
+    public HighlightPage<Article> getHighlightPage(String query, String filterQuery) {
 
-        HighlightQuery highlightQuery = new SimpleHighlightQuery(new Criteria("title").is(query));
+        String[] words = filterQuery.split(",");
+
+        Criteria conditions = createSearchConditions(words, query);
+
+        HighlightQuery highlightQuery = new SimpleHighlightQuery(conditions);
 
         HighlightOptions hlOptions = new HighlightOptions();
         hlOptions.addField("title");
@@ -55,8 +60,28 @@ public class CustomRepoImpl implements CustomRepository {
         hlOptions.setSimplePostfix("</b>");
         highlightQuery.setHighlightOptions(hlOptions);
 
-        return solrTemplate.queryForHighlightPage(highlightQuery,Article.class);
+//        return processHighlight(solrTemplate.queryForHighlightPage(highlightQuery, Article.class));
+
+//        System.out.println("HEYY: "+solrTemplate.queryForHighlightPage
+//                (highlightQuery,Article.class).getHighlighted().get(0).getHighlights().get(0).getSnipplets());
+
+        return solrTemplate.queryForHighlightPage(highlightQuery, Article.class);
     }
+
+//    public HighlightPage<Article> processHighlight(HighlightPage<Article> highlightPage){
+//        int i = 0;
+//        for (HighlightEntry<Article> article: highlightPage.getHighlighted()) {
+//            for (HighlightEntry.Highlight highlight: article.getHighlights()) {
+//                for (String snippet: highlight.getSnipplets()){
+//                    if(highlight.getField().getName().equals("content")){
+//                        highlightPage.getContent().get(i).setContent(snippet);
+//                    }
+//                }
+//            }
+//            i++;
+//        }
+//        return highlightPage;
+//    }
 
     private Criteria createSearchConditions(String[] words, String query) {
         Criteria title = new Criteria("title").is(query);
@@ -69,8 +94,6 @@ public class CustomRepoImpl implements CustomRepository {
                 src = src.or(new Criteria("source").is(word));
             }
         }
-
-        System.out.println("HEYY: "+title.and(src));
 
         return title.and(src);
     }

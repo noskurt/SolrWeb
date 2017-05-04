@@ -74,8 +74,10 @@
                         </dd>
 
                         <div class="alert alert-success" style="margin-top: 5%">
-                            <dl th:each="highlight : ${highlighted.getHighlights(article)}">
-                                <span th:utext="${highlight.getSnipplets()}">Snippet</span>
+                            <dl th:each="highlight : ${highlighted.getHighlighted()}">
+                                <span th:each="hl : ${highlight.getHighlights()}">
+                                    <span th:utext="${hl.getSnipplets()}">Snippet</span>
+                                </span>
                             </dl>
                         </div>
                     </a>

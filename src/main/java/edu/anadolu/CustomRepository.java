@@ -20,6 +20,6 @@ public interface CustomRepository {
     FacetPage<Article> getFacetPage(String query, String filterQuery);
 
     @Highlight(prefix = "<b>", postfix = "</b>", fields = {"title", "content"})
-    HighlightPage<Article> getHighlightPage(String query);
+    HighlightPage<Article> getHighlightPage(String query, String filterQuery);
 
 }
