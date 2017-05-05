@@ -45,8 +45,8 @@ public class SearchController {
             return search(query, pageable, model);
         } else {
             model.addAttribute("page", customRepository.searchFilter(query, filterQuery, pageable));
-            model.addAttribute("faceted", customRepository.getFacetPage(query, filterQuery));
-            model.addAttribute("highlighted", customRepository.getHighlightPage(query, filterQuery));
+            model.addAttribute("faceted", customRepository.getFacetPage(query, filterQuery, pageable));
+            model.addAttribute("highlighted", customRepository.getHighlightPage(query, filterQuery, pageable));
             model.addAttribute("pageable", pageable);
             model.addAttribute("query", query);
             model.addAttribute("fquery", filterQuery);

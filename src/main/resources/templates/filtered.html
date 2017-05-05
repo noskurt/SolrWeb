@@ -75,8 +75,10 @@
 
                         <div class="alert alert-success" style="margin-top: 5%">
                             <dl th:each="highlight : ${highlighted.getHighlighted()}">
-                                <span th:each="hl : ${highlight.getHighlights()}">
-                                    <span th:utext="${hl.getSnipplets()}">Snippet</span>
+                                <span th:if="${article.id eq highlight.getEntity().getId()}">
+                                    <span th:each="hl : ${highlight.getHighlights()}">
+                                        <dl th:utext="${hl.getSnipplets()}">Snippet</dl>
+                                    </span>
                                 </span>
                             </dl>
                         </div>

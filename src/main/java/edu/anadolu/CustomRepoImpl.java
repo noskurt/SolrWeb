@@ -36,8 +36,10 @@ public class CustomRepoImpl implements CustomRepository {
     }
 
     @Override
-    public FacetPage<Article> getFacetPage(String query, String filterQuery) {
+    public FacetPage<Article> getFacetPage(String query, String filterQuery, Pageable pageable) {
         FacetQuery facetQuery = new SimpleFacetQuery(new Criteria("title").is(query));
+
+        facetQuery.setPageRequest(pageable);
 
         facetQuery.setFacetOptions(new FacetOptions("source"));
 
@@ -45,13 +47,15 @@ public class CustomRepoImpl implements CustomRepository {
     }
 
     @Override
-    public HighlightPage<Article> getHighlightPage(String query, String filterQuery) {
+    public HighlightPage<Article> getHighlightPage(String query, String filterQuery, Pageable pageable) {
 
         String[] words = filterQuery.split(",");
 
         Criteria conditions = createSearchConditions(words, query);
 
         HighlightQuery highlightQuery = new SimpleHighlightQuery(conditions);
+
+        highlightQuery.setPageRequest(pageable);
 
         HighlightOptions hlOptions = new HighlightOptions();
         hlOptions.addField("title");
@@ -63,7 +67,7 @@ public class CustomRepoImpl implements CustomRepository {
 //        return processHighlight(solrTemplate.queryForHighlightPage(highlightQuery, Article.class));
 
 //        System.out.println("HEYY: "+solrTemplate.queryForHighlightPage
-//                (highlightQuery,Article.class).getHighlighted().get(0).getHighlights().get(0).getSnipplets());
+//                (highlightQuery,Article.class).getHighlighted().get(0).getEntity().);
 
         return solrTemplate.queryForHighlightPage(highlightQuery, Article.class);
     }

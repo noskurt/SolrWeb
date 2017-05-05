@@ -17,9 +17,9 @@ public interface CustomRepository {
     SolrResultPage<Article> searchFilter(String query, String fQuery, Pageable pageable);
 
     @Facet(fields = {"source"}, limit = 10)
-    FacetPage<Article> getFacetPage(String query, String filterQuery);
+    FacetPage<Article> getFacetPage(String query, String filterQuery, Pageable pageable);
 
     @Highlight(prefix = "<b>", postfix = "</b>", fields = {"title", "content"})
-    HighlightPage<Article> getHighlightPage(String query, String filterQuery);
+    HighlightPage<Article> getHighlightPage(String query, String filterQuery, Pageable pageable);
 
 }
