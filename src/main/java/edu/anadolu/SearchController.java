@@ -39,16 +39,20 @@ public class SearchController {
     public String filtered(@RequestParam(value = "q", required = false) String query,
                            @RequestParam(value = "fq", required = false) String filterQuery,
                            @PageableDefault(page = 0, size = 10) Pageable pageable,
-                           Model model){
+                           Model model) {
 
-        model.addAttribute("page", customRepository.searchFilter(query, filterQuery, pageable));
-        model.addAttribute("faceted", customRepository.getFacetPage(query, filterQuery));
-        model.addAttribute("highlighted",customRepository.getHighlightPage(query, filterQuery));
-        model.addAttribute("pageable", pageable);
-        model.addAttribute("query",query);
-        model.addAttribute("fquery",filterQuery);
+        if (filterQuery == null) {
+            return search(query, pageable, model);
+        } else {
+            model.addAttribute("page", customRepository.searchFilter(query, filterQuery, pageable));
+            model.addAttribute("faceted", customRepository.getFacetPage(query, filterQuery));
+            model.addAttribute("highlighted", customRepository.getHighlightPage(query, filterQuery));
+            model.addAttribute("pageable", pageable);
+            model.addAttribute("query", query);
+            model.addAttribute("fquery", filterQuery);
 
-        return "filtered";
+            return "filtered";
+        }
     }
 
     @Autowired
