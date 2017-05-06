@@ -89,23 +89,36 @@
 </div>
 
 <ul class="pager">
-    <li><a th:if="${pageable.getPageNumber() ne 0}" th:href="@{${'/search'}(q=${query},page=0)}">First</a></li>
-    <li class="disabled"><a th:if="${pageable.getPageNumber() eq 0}" href="javascript:void(0);">First</a></li>
-
-    <li><a th:if="${pageable.hasPrevious()}" th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()-1})}">Previous</a>
+    <li>
+        <a th:if="${pageable.getPageNumber() ne 0}" th:href="@{${'/search'}(q=${query},page=0)}">First</a>
     </li>
-    <li class="disabled"><a th:if="${pageable.hasPrevious() eq false}" href="javascript:void(0);">Previous</a></li>
+    <li class="disabled">
+        <a th:if="${pageable.getPageNumber() eq 0}" href="javascript:void(0);">First</a>
+    </li>
 
-    <li class="disabled"><span th:text="${pageable.getPageNumber()}+1+' / '+${page.getTotalPages()}"></span></li>
+    <li>
+        <a th:if="${pageable.hasPrevious()}" th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()-1})}">Previous</a>
+    </li>
+    <li class="disabled">
+        <a th:if="${pageable.hasPrevious() eq false}" href="javascript:void(0);">Previous</a>
+    </li>
+
+    <li class="disabled">
+        <span th:text="${pageable.getPageNumber()}+1+' / '+${page.getTotalPages()}"></span>
+    </li>
 
     <li><a th:if="${pageable.getPageNumber() lt page.getTotalPages()-1}"
-           th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()+1})}">Next</a></li>
-    <li class="disabled"><a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Next</a>
+           th:href="@{${'/search'}(q=${query},page=${pageable.getPageNumber()+1})}">Next</a>
+    </li>
+    <li class="disabled">
+        <a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Next</a>
     </li>
 
     <li><a th:if="${pageable.getPageNumber() ne page.getTotalPages()-1}"
-           th:href="@{${'/search'}(q=${query},page=${page.getTotalPages()-1})}">Last</a></li>
-    <li class="disabled"><a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Last</a>
+           th:href="@{${'/search'}(q=${query},page=${page.getTotalPages()-1})}">Last</a>
+    </li>
+    <li class="disabled">
+        <a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Last</a>
     </li>
 </ul>
 
@@ -123,17 +136,6 @@
     </div>
     <div class="col-xs-4"></div>
 </div>
-
-<!--<ul>-->
-<!--<li th:each="pageNo : ${#numbers.sequence(0, page.getTotalPages() - 1)}">-->
-<!--<a th:if="${pageable.getPageNumber() eq pageNo}" href="javascript:void(0);">-->
-<!--<span th:text="${pageNo + 1}"></span>-->
-<!--</a>-->
-<!--<a th:if="${not (pageable.getPageNumber() eq pageNo)}" th:href="@{${'/search'}(q=${query},page=${pageNo})}">-->
-<!--<span th:text="${pageNo + 1}"></span>-->
-<!--</a>-->
-<!--</li>-->
-<!--</ul>-->
 
 <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"
    title="Click to return on the top page" data-toggle="tooltip" data-placement="left"><span
