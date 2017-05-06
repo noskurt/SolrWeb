@@ -19,7 +19,6 @@ public class WebContext {
 
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
-
                 registry.addViewController("/news").setViewName("article");
             }
 

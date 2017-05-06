@@ -9,6 +9,7 @@
         ul li {
             display: inline;
         }
+
         .back-to-top {
             cursor: pointer;
             position: fixed;
@@ -16,11 +17,13 @@
             right: 20px;
             display: none;
         }
+
         a:hover {
             text-decoration: none;
         }
+
         mark {
-            background-color:yellow;
+            background-color: yellow;
         }
     </style>
 </head>
@@ -46,7 +49,8 @@
     <div id="filter" class="collapse">
         <form action="#" th:action="@{${'/search/filter'}(q=${query})}" method="post">
             <p class="checkbox" th:each="facet : ${faceted.getFacetResultPage('source')}">
-                <input type="checkbox" th:text="${facet.getValue()}" th:value="${facet.getValue()}" name="fq" th:checked="${fquery.contains(facet.getValue())}"/>
+                <input type="checkbox" th:text="${facet.getValue()}" th:value="${facet.getValue()}" name="fq"
+                       th:checked="${fquery.contains(facet.getValue())}"/>
                 <span class="badge" th:text="${facet.getValueCount()}"></span>
             </p>
             <button type="submit" class="btn btn-primary">Filter</button>
@@ -90,19 +94,40 @@
 </div>
 
 <ul class="pager">
-    <li><a th:if="${pageable.getPageNumber() ne 0}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=0)}">First</a></li>
-    <li class="disabled"><a th:if="${pageable.getPageNumber() eq 0}" href="javascript:void(0);">First</a></li>
+    <li>
+        <a th:if="${pageable.getPageNumber() ne 0}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=0)}">First</a>
+    </li>
+    <li class="disabled">
+        <a th:if="${pageable.getPageNumber() eq 0}" href="javascript:void(0);">First</a>
+    </li>
 
-    <li><a th:if="${pageable.hasPrevious()}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${pageable.getPageNumber()-1})}">Previous</a></li>
-    <li class="disabled"><a th:if="${pageable.hasPrevious() eq false}" href="javascript:void(0);">Previous</a></li>
+    <li>
+        <a th:if="${pageable.hasPrevious()}"
+           th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${pageable.getPageNumber()-1})}">Previous</a>
+    </li>
+    <li class="disabled">
+        <a th:if="${pageable.hasPrevious() eq false}" href="javascript:void(0);">Previous</a>
+    </li>
 
-    <li class="disabled"><span th:text="${pageable.getPageNumber()}+1+' / '+${page.getTotalPages()}"></span></li>
+    <li class="disabled">
+        <span th:text="${pageable.getPageNumber()}+1+' / '+${page.getTotalPages()}"></span>
+    </li>
 
-    <li><a th:if="${pageable.getPageNumber() lt page.getTotalPages()-1}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${pageable.getPageNumber()+1})}">Next</a></li>
-    <li class="disabled"><a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Next</a></li>
+    <li>
+        <a th:if="${pageable.getPageNumber() lt page.getTotalPages()-1}"
+           th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${pageable.getPageNumber()+1})}">Next</a>
+    </li>
+    <li class="disabled">
+        <a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Next</a>
+    </li>
 
-    <li><a th:if="${pageable.getPageNumber() ne page.getTotalPages()-1}" th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${page.getTotalPages()-1})}">Last</a></li>
-    <li class="disabled"><a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Last</a></li>
+    <li>
+        <a th:if="${pageable.getPageNumber() ne page.getTotalPages()-1}"
+           th:href="@{${'/search/filter'}(q=${query},fq=${fquery},page=${page.getTotalPages()-1})}">Last</a>
+    </li>
+    <li class="disabled">
+        <a th:if="${pageable.getPageNumber() eq page.getTotalPages()-1}" href="javascript:void(0);">Last</a>
+    </li>
 </ul>
 
 <div class="row" style="margin-bottom: 5%">
@@ -146,25 +171,17 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    function filterControl(item) {
-        alert(item.value);
-    }
-    /*]]>*/
-</script>
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
     function pageControl(item) {
         var pageNoText = item.value; // string
         var pageNo = parseInt(pageNoText);
         var maxPage = [[${page.getTotalPages()}]];
         var nowPage = [[${pageable.getPageNumber()}+1]];
 
-        if(!(pageNo > 0)) {
+        if (!(pageNo > 0)) {
             pageNo = nowPage;
         }
 
-        if(!(pageNo < 1+maxPage)){
+        if (!(pageNo < 1 + maxPage)) {
             pageNo = nowPage;
         }
 
